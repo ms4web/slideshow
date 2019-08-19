@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none
+    }
+
+    #wrap {
+        width: 100%;
+    }
+
+    .imgwrap {
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+        position: relative;
+        max-height:600px;
+        height: 60vw; border:3px solid gold; 
+    }
+
+    .img {
+        width: 100%; height:100%;
+        position: absolute;
+        display: none;
+    }
+
+    .img>img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .img>p {
+        position: absolute;
+        bottom: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        right: 30px;
+        padding: 4px 20px;
+
+    }
+
+    .prev,
+    .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0px 16px 8px;
+        transition: 0.8s ease;
+
+    }
+
+    .prev {
+        left: 0px;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .next {
+        right: 0px;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .prev:hover {
+
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .next:hover {
+
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .dotwrap {
+        position: absolute;
+        bottom: 10px;
+        left: 50%; 
+        transform:translateX(-50%);
+
+    }
+
+    .dotwrap>li {
+        width: 20px;
+        height: 20px;
+        background: #ccc;
+        float: left;
+        border-radius: 50%; cursor: pointer;
+    }
+    .dotwrap > li:nth-child(2) { margin: 0 10px; }
+    .dotwrap>li:nth-child(3) {
+    	 margin-right:10px;
+    }
+    .dot.on { background:#000; }
+
+    .fade { animation:fade 1.5s ease; }
+    @keyframes fade{
+    	from { opacity:0.4; }
+    	to { opacity:1; }
+    }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="imgwrap">
+            <div class="img fade">
+                <img src="https://cdn.pixabay.com/photo/2019/07/06/10/28/cabbage-white-4320159_960_720.jpg" alt="butterfly">
+                <p class="caption">Caption</p>
+            </div>
+            <div class="img fade">
+                <img src="https://cdn.pixabay.com/photo/2019/08/09/20/08/the-feather-of-a-bird-4395771_960_720.jpg" alt="feather">
+                <p class="caption">Caption</p>
+            </div>
+            <div class="img fade">
+                <img src="https://cdn.pixabay.com/photo/2019/08/15/14/41/sunrise-4408208_960_720.jpg" alt="city">
+                <p class="caption">Caption</p>
+            </div>
+            <div class="img fade">
+                <img src="https://cdn.pixabay.com/photo/2019/08/16/11/59/cat-4410145_960_720.jpg" alt="cat">
+                <p class="caption">Caption</p>
+            </div>
+            <div class="prev" onclick="plusSlide(-1)">&lt;</div>
+            <div class="next" onclick="plusSlide(1)">&gt;</div>
+            <ul class="dotwrap">
+                <li class="dot" onclick="currentSlide(1)"></li>
+                <li class="dot" onclick="currentSlide(2)"></li>
+                <li class="dot" onclick="currentSlide(3)"></li>
+                <li class="dot" onclick="currentSlide(4)"></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+    var slideIdx = 1;
+    showSlide(slideIdx);
+
+
+    function currentSlide(n) {
+    	showSlide(slideIdx = n);
+    }
+
+    function plusSlide(n){
+    	showSlide(slideIdx += n);
+    }
+
+    function showSlide(n){
+    	var slides = document.getElementsByClassName('img');
+    	var dots = document.getElementsByClassName('dot');
+    	var caption = document.getElementsByClassName('caption');
+    	var alt = document.querySelectorAll('img');
+      	if( n > slides.length) { slideIdx = 1; }
+    	if(n<1) { slideIdx = slides.length }
+
+        for(var i=0; i<slides.length; i++) {
+        	slides[i].style.display = "none";
+        }		
+
+        for(var i=0; i<dots.length; i++) {
+        	dots[i].className = dots[i].className.replace(' on', ' ');
+        }
+
+        slides[slideIdx-1].style.display = "block";
+        dots[slideIdx-1].className += ' on';
+        caption[slideIdx-1].innerHTML = alt[slideIdx-1].getAttribute('alt');
+        
+    }  
+
+    </script>
+</body>
+
+</html>
